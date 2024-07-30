@@ -1,0 +1,15 @@
+{
+    "keep": {
+        "days": true,
+        "amount": 14
+    },
+    "auditLog": "/home/sarwar/WEB/JOB/Task/Studyin/study-live-server/logs/winston/successes/.279e5d9ae6ef63b7dd4d3bd025ab3348f6c2f276-audit.json",
+    "files": [
+        {
+            "date": 1722369951754,
+            "name": "/home/sarwar/WEB/JOB/Task/Studyin/study-live-server/logs/winston/successes/phu-2024-31-07-02-success.log",
+            "hash": "fa0bea2660f6725d89be801fbed842d2bb145c5f946e56ef7dbcb05c2c306358"
+        }
+    ],
+    "hashType": "sha256"
+}
