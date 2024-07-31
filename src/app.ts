@@ -1,9 +1,8 @@
+import cookieParser from 'cookie-parser';
 import cors from 'cors';
-import express, { Application, NextFunction, Request, Response } from 'express';
+import express, { Application, Request, Response } from 'express';
 import httpStatus from 'http-status';
 import globalErrorHandler from './app/middlewares/globalErrorHandler';
-
-import cookieParser from 'cookie-parser';
 import router from './app/routes';
 import config from './config';
 
@@ -17,6 +16,7 @@ app.use(
             'http://localhost:3000',
             'http://127.0.0.1:3000',
             'http://192.168.0.101:3000',
+            'http://localhost:5173',
           ]
         : [''],
     credentials: true,
@@ -25,16 +25,26 @@ app.use(
 );
 app.use(cookieParser());
 
-//parser
+// parser
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// Root route
+app.get('/', (req: Request, res: Response) => {
+  res.json({
+    status: httpStatus.OK,
+    message: `sarwar-server is running on http://localhost:${config.port}`,
+  });
+});
+
+// API routes
 app.use('/api/v1', router);
 
-//global error handler
+// Global error handler
 app.use(globalErrorHandler);
 
-//handle not found
-app.use((req: Request, res: Response, next: NextFunction) => {
+// Handle not found
+app.use((req: Request, res: Response) => {
   res.status(httpStatus.NOT_FOUND).json({
     success: false,
     message: 'Not Found',
@@ -45,14 +55,6 @@ app.use((req: Request, res: Response, next: NextFunction) => {
       },
     ],
   });
-  next();
 });
 
-app.use('/', (req: Request, res: Response) => {
-  // console.log(req?.body,"https//:localhost:5000");
-  res.json({
-    status: httpStatus.OK,
-    message: `sarwar-server  is running on http://localhost:${config.port}`,
-  });
-});
 export default app;

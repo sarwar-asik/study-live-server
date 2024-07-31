@@ -10,7 +10,6 @@ import { AuthService } from './Auth.service';
 const SignUp = catchAsync(async (req: Request, res: Response) => {
   const data = req.body;
   const result = await AuthService.signUp(data);
-  
 
   const cookieOptions = {
     secure: config.env === 'production',
@@ -22,11 +21,11 @@ const SignUp = catchAsync(async (req: Request, res: Response) => {
     // eslint-disable-next-line no-unused-vars
     const { password, ...userData } = result.data;
 
-    sendResponse<Partial<User>>(res, {
+    sendResponse<Partial<any>>(res, {
       statusCode: httpStatus.CREATED,
       success: true,
       message: 'Successfully SignUp',
-      data: userData,
+      data: { userData: userData, accessToken: result?.accessToken },
     });
   }
 });
