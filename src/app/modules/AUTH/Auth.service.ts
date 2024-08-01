@@ -25,12 +25,14 @@ const signUp = async (
   const result = await prisma.user.create({
     data: userData,
   });
+  // console.log("🚀 ~ file: Auth.service.ts:28 ~ result:", result)
 
   const newAccessToken = jwtHelpers.createToken(
     {
-      email: userData.email,
-      id: userData.id,
-      role: userData.role,
+      email: result.email,
+      id: result.id,
+      role: result.role,
+      name: result.name,
     },
     config.jwt.secret as Secret,
     config.jwt.expires_in as string
@@ -75,6 +77,7 @@ const authLogin = async (payload: {
       email,
       role: isUserExist.role,
       id: isUserExist.id,
+      name: isUserExist.name,
     },
     config.jwt.secret as Secret,
     config.jwt.expires_in as string
@@ -85,6 +88,7 @@ const authLogin = async (payload: {
       email,
       role: isUserExist.role,
       id: isUserExist.id,
+      name: isUserExist.name,
     },
     config.jwt.refresh_secret as Secret,
     config.jwt.refresh_expires_in as string
@@ -125,6 +129,8 @@ const refreshToken = async (token: string): Promise<any> => {
     {
       id: isUserExist.id,
       role: isUserExist.role,
+      name: isUserExist.name,
+      email: isUserExist.email,
     },
     config.jwt.secret as Secret,
     config.jwt.expires_in as string
