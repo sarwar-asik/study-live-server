@@ -12,11 +12,17 @@ export const io = new Server(httpServer, {
     origin: '*',
   },
 });
+// const connectUsers =[]
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const connectedClients: any = {};
 
 io.on('connection', socket => {
-  console.log('user is connected');
+  console.log('user is connected', socket?.handshake?.query?.id);
+  socket?.id = socket?.handshake?.query?.id;
+  connectedClients[socket?.id] = socket;
+
   roomHandler(socket);
-  chatHandler(socket);
+  chatHandler(socket, connectedClients);
 
   socket.on('disconnect', () => {
     console.log('disconnected');

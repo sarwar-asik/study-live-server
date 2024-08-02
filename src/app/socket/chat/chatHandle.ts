@@ -1,10 +1,43 @@
 import { Socket } from 'socket.io';
+import { MessageServices } from '../../modules/message/message.service';
 
-export const chatHandler = (socket: Socket) => {
+type IMessage = {
+  message: string;
+  senderId: string;
+  receiverId: string;
+};
+
+export const chatHandler = (socket: Socket, connectedClients: any) => {
+  console.log(socket?.id, 'socket?.id');
   socket.emit('get-users', { users: [] });
 
-  socket.on('send-message', ({ message }) => {
-    socket.broadcast.emit('message', { message });
-  });
-  
+  // console.log(connectedClients, 'connectedClients');
+  // const clientSocket = connectedClients[socket?.id]
+  function emitMessageToClients(clientIds: string[], message: IMessage) {
+    clientIds.forEach(clientId => {
+      const clientSocket = connectedClients[clientId];
+      if (clientSocket) {
+        clientSocket.emit('new-message', message);
+      } else {
+        console.log(`Client with ID ${clientId} is not Online.`);
+      }
+    });
+  }
+
+  socket.on(
+    'send-message',
+    async ({ message, senderId, receiverId }: IMessage) => {
+      console.log(message, 'message');
+
+      const createMessage = await MessageServices.insertDB({
+        message,
+        senderId,
+        receiverId,
+      });
+      if (createMessage) {
+        // socket.broadcast.emit('message', { createMessage });
+        emitMessageToClients([senderId, receiverId], createMessage);
+      }
+    }
+  );
 };
