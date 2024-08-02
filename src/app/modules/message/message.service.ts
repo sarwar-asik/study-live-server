@@ -21,6 +21,27 @@ const insertDB = async (messageData: Message): Promise<Message> => {
   return result;
 };
 
+const getUserMessageDB = async (senderId: string, receiverId: string) => {
+  const messages = await prisma.message.findMany({
+    where: {
+      OR: [
+        {
+          AND: [{ senderId: senderId }, { receiverId: receiverId }],
+        },
+        {
+          AND: [{ senderId: receiverId }, { receiverId: senderId }],
+        },
+      ],
+    },
+    include: {
+      receiver: true,
+      sender: true,
+    },
+  });
+
+  return messages;
+};
+
 // const getAllDb = async (
 //   filters: IServiceFilterRequest,
 //   options: IPaginationOptions
@@ -226,4 +247,5 @@ export const MessageServices = {
   getSingleData,
   updateOneInDB,
   deleteByIdFromDB,
+  getUserMessageDB,
 };

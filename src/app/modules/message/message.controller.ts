@@ -36,6 +36,18 @@ const getAllDb = catchAsync(async (req: Request, res: Response) => {
     data: result.data,
   });
 });
+const getUserMessage = catchAsync(async (req: Request, res: Response) => {
+  const senderId = req.query.receiverId as string;
+  const receiverId = req.query.senderId as string;
+  // console.log(filters,"filters from controller",options);
+  const result = await MessageServices.getUserMessageDB(senderId, receiverId);
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Usser Message all fetched successfully',
+    data: result,
+  });
+});
 
 const getSingleDataById = catchAsync(async (req: Request, res: Response) => {
   const id = req.params.id;
@@ -77,4 +89,5 @@ export const MessageController = {
   getSingleDataById,
   updateOneInDB,
   deleteByIdFromDB,
+  getUserMessage,
 };

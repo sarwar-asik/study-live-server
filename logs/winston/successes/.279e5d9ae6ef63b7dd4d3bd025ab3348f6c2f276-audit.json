@@ -144,6 +144,11 @@
             "date": 1722607381706,
             "name": "/home/sarwar/WEB/JOB/Task/Studyin/study-live-server/logs/winston/successes/phu-2024-02-08-20-success.log",
             "hash": "10c20b75ce96bea0b206e7b689893948f93d38aa9fb21421f44afdfdf8038267"
+        },
+        {
+            "date": 1722611594312,
+            "name": "/home/sarwar/WEB/JOB/Task/Studyin/study-live-server/logs/winston/successes/phu-2024-02-08-21-success.log",
+            "hash": "ca96c396bb58c9ea4192233c0e4e03697fd80bd71115bdb0b9f2a97fe08a209d"
         }
     ],
     "hashType": "sha256"

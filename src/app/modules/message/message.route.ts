@@ -16,6 +16,7 @@ router.post(
 );
 
 router.get('/', MessageController.getAllDb);
+router.get('/user', MessageController.getUserMessage);
 router.get('/:id', MessageController.getSingleDataById);
 
 router.patch(
