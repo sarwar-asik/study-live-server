@@ -1,4 +1,4 @@
-import { Role, User } from '@prisma/client';
+import { User, } from '@prisma/client';
 import { Request, Response } from 'express';
 import httpStatus from 'http-status';
 import ApiError from '../../../errors/ApiError';
@@ -7,6 +7,7 @@ import pick from '../../../shared/pick';
 import sendResponse from '../../../shared/sendResponse';
 import { UserFilterableFields } from './UserConstant';
 import { UsersService } from './Users.service';
+import { ENUM_USER_ROLE } from '../../../enums/user';
 
 const createAdmin = catchAsync(async (req: Request, res: Response) => {
   const authUser = req.user as any;
@@ -14,7 +15,7 @@ const createAdmin = catchAsync(async (req: Request, res: Response) => {
   const data = req.body;
   console.log(authUser.role, 'and', data.role);
 
-  if (authUser.role !== Role.super_admin && data.role === 'admin') {
+  if (authUser.role !== ENUM_USER_ROLE.SUPER_ADMIN && data.role === 'admin') {
     // console.log('yesssssss');
     throw new ApiError(httpStatus.NOT_ACCEPTABLE, 'You can not create admin');
   }

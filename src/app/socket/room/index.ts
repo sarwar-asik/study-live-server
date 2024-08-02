@@ -17,14 +17,14 @@ interface IRoomParams {
   userId: string;
 }
 
-interface IJoinRoomParams extends IRoomParams {
-  userName: string;
-}
-interface IMessage {
-  content: string;
-  author?: string;
-  timestamp: number;
-}
+// interface IJoinRoomParams extends IRoomParams {
+//   userName: string;
+// }
+// interface IMessage {
+//   content: string;
+//   author?: string;
+//   timestamp: number;
+// }
 
 export const roomHandler = (socket: Socket) => {
   // Create a new room
