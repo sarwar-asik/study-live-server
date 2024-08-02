@@ -9,7 +9,7 @@ import {
 } from './message.contant';
 import { IMessageFilterRequest } from './message.interface';
 
-const insertDB = async (messageData: Message): Promise<Message> => {
+const insertDB = async (messageData: Partial<Message >): Promise<Message> => {
   const result = await prisma.message.create({
     data: messageData,
     include: {
