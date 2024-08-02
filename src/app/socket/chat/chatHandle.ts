@@ -8,7 +8,7 @@ type IMessage = {
 };
 
 export const chatHandler = (socket: Socket, connectedClients: any) => {
-  console.log(socket?.id, 'socket?.id');
+  // console.log(socket?.id, 'socket?.id');
   socket.emit('get-users', { users: [] });
 
   // console.log(connectedClients, 'connectedClients');
@@ -34,10 +34,10 @@ export const chatHandler = (socket: Socket, connectedClients: any) => {
         senderId,
         receiverId,
       });
-      if (createMessage) {
-        // socket.broadcast.emit('message', { createMessage });
-        emitMessageToClients([senderId, receiverId], createMessage);
-      }
+      socket.broadcast.emit('new-message', { createMessage });
+      // if (createMessage) {
+      //   emitMessageToClients([senderId, receiverId], createMessage);
+      // }
     }
   );
 };
