@@ -6,7 +6,7 @@ import { roomHandler } from './app/socket/room';
 
 const httpServer = createServer(app);
 
-const io = new Server(httpServer, {
+export const io = new Server(httpServer, {
   cors: {
     origin: '*',
   },
@@ -15,6 +15,7 @@ const io = new Server(httpServer, {
 io.on('connection', socket => {
   console.log('user is connected');
   roomHandler(socket);
+
 
   socket.on('disconnect', () => {
     console.log('disconnected');
