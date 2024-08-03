@@ -35,7 +35,7 @@ io.on('connection', socket => {
   });
 
   socket.on('answer', answerData => {
-    console.log(answerData);
+    console.log(answerData, 'answerData');
     // const targetId = socket.handshake.query.targetId;
     if (connectedClients[answerData.targetId]) {
       connectedClients[answerData.targetId].emit('answer', answerData.answer);
@@ -43,7 +43,7 @@ io.on('connection', socket => {
   });
 
   socket.on('ice-candidate', candidate => {
-    const targetId = socket.handshake.query.targetId as string
+    const targetId = socket.handshake.query.targetId as string;
     if (connectedClients[targetId]) {
       connectedClients[targetId].emit('ice-candidate', candidate);
     }

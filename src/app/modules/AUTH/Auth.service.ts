@@ -33,6 +33,7 @@ const signUp = async (
       id: result.id,
       role: result.role,
       name: result.name,
+      points: result.points,
     },
     config.jwt.secret as Secret,
     config.jwt.expires_in as string
@@ -78,6 +79,7 @@ const authLogin = async (payload: {
       role: isUserExist.role,
       id: isUserExist.id,
       name: isUserExist.name,
+      points: isUserExist.points,
     },
     config.jwt.secret as Secret,
     config.jwt.expires_in as string
@@ -89,6 +91,7 @@ const authLogin = async (payload: {
       role: isUserExist.role,
       id: isUserExist.id,
       name: isUserExist.name,
+      points: isUserExist.points,
     },
     config.jwt.refresh_secret as Secret,
     config.jwt.refresh_expires_in as string
@@ -131,6 +134,7 @@ const refreshToken = async (token: string): Promise<any> => {
       role: isUserExist.role,
       name: isUserExist.name,
       email: isUserExist.email,
+      points: isUserExist.points,
     },
     config.jwt.secret as Secret,
     config.jwt.expires_in as string

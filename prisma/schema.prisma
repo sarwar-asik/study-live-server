@@ -37,6 +37,7 @@ model User {
   updatedAt        DateTime  @updatedAt
   sentMessages     Message[] @relation("SentMessages")
   receivedMessages Message[] @relation("ReceivedMessages")
+  points           Int       @default(10)
 }
 
 model Message {
