@@ -10,6 +10,7 @@ import {
 import { IMessageFilterRequest } from './message.interface';
 
 const insertDB = async (messageData: Partial<Message >): Promise<Message> => {
+  console.log(messageData, 'messageData');           
   const result = await prisma.message.create({
     data: messageData,
     include: {
