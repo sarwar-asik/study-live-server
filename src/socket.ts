@@ -43,10 +43,11 @@ io.on('connection', socket => {
   });
 
   socket.on('ice-candidate', candidate => {
-    const targetId = socket.handshake.query.targetId as string;
-    if (connectedClients[targetId]) {
-      connectedClients[targetId].emit('ice-candidate', candidate);
-    }
+    socket.emit('ice-candidate', candidate);
+    // const targetId = socket.handshake.query.targetId as string;
+    // if (connectedClients[targetId]) {
+    //   connectedClients[targetId].emit('ice-candidate', candidate);
+    // }
   });
 
   socket.on('end-call', receiverId => {
