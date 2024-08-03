@@ -23,6 +23,7 @@ CREATE TABLE "User" (
     "img" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
+    "points" INTEGER NOT NULL DEFAULT 10,
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
 );
