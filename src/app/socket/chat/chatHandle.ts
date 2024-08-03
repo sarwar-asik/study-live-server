@@ -28,7 +28,11 @@ export const chatHandler = (socket: Socket, connectedClients: any) => {
     'send-message',
     async ({ message, senderId, receiverId }: IMessage) => {
       console.log(message, 'message');
-
+      console.log({
+        message,
+        senderId,
+        receiverId,
+      });
       const createMessage = await MessageServices.insertDB({
         message,
         senderId,
