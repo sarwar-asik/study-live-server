@@ -2,6 +2,7 @@ import { createServer } from 'http';
 import { Server } from 'socket.io';
 import app from './app';
 import { chatHandler } from './app/socket/chat/chatHandle';
+import { roomHandler } from './app/socket/room';
 // const app: Application = express();
 
 const httpServer = createServer(app);
@@ -25,11 +26,12 @@ io.on('connection', socket => {
   socket.on('offer', offerData => {
     console.log('>>offer', offerData);
     if (connectedClients[offerData.targetId]) {
-      // console.log('Sending incoming-call to:', offerData.targetId);
+      console.log('Sending incoming-call to:', offerData.targetId);
       connectedClients[offerData.targetId].emit('incoming-call', {
         offer: offerData.offer,
-        from: socket.id,
+        from: offerData.senderId,
         senderName: offerData.senderName,
+        senderId: offerData.senderId,
       });
     }
   });
@@ -44,7 +46,7 @@ io.on('connection', socket => {
 
   socket.on('ice-candidate', candidate => {
     socket.emit('ice-candidate', candidate);
-    console.log(candidate, '>> recive candidate')
+    console.log(candidate, '>> recive candidate');
     // const targetId = socket.handshake.query.targetId as string;
     // if (connectedClients[targetId]) {
     //   connectedClients[targetId].emit('ice-candidate', candidate);
@@ -59,6 +61,7 @@ io.on('connection', socket => {
   });
 
   chatHandler(socket, connectedClients);
+  roomHandler(socket);
 
   socket.on('disconnect', () => {
     console.log('disconnected');
