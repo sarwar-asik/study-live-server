@@ -5,8 +5,8 @@ import config from '../../../config';
 import { tokenName } from '../../../constants/jwt.token';
 import catchAsync from '../../../shared/catchAsync';
 import sendResponse from '../../../shared/sendResponse';
-import { AuthService } from './Auth.service';
 import { uploadOnCloudinary } from '../../middlewares/cloudinary/cloudinary';
+import { AuthService } from './Auth.service';
 
 const SignUp = catchAsync(async (req: Request, res: Response) => {
   const data = req.body;
@@ -22,7 +22,7 @@ const SignUp = catchAsync(async (req: Request, res: Response) => {
   if (profileImageUrl) {
     data.img = profileImageUrl;
   }
-  console.log(data)
+  console.log(data);
   const result = await AuthService.signUp(data);
 
   const cookieOptions = {
