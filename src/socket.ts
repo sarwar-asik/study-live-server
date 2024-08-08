@@ -2,6 +2,7 @@
 import { createServer } from 'http';
 import { Server } from 'socket.io';
 import app from './app';
+import { AudioHandler } from './app/socket/audio';
 import { chatHandler } from './app/socket/chat/chatHandle';
 import { roomHandler } from './app/socket/room';
 // const app: Application = express();
@@ -28,6 +29,7 @@ io.on('connection', socket => {
   // console.log(socket.id, 'socket.id');
 
   chatHandler(socket);
+  AudioHandler(socket, connectedClients);
 
   socket.on('disconnect', () => {
     console.log('disconnected');

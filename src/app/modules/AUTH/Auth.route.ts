@@ -4,11 +4,13 @@ import auth from '../../middlewares/auth';
 import validateRequest from '../../middlewares/validateRequest';
 import { AuthController } from './Auth.controller';
 import { AuthValidation } from './Auth.validation';
+import upload from '../../middlewares/multer/multer';
 const router = Router();
 
 router.post(
   '/sign-up',
-  validateRequest(AuthValidation.signUp),
+  upload.single('image'),
+  // validateRequest(AuthValidation.signUp),
   AuthController.SignUp
 );
 router.post(
