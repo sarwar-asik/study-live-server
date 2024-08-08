@@ -26,8 +26,8 @@ io.on('connection', socket => {
   roomHandler(socket);
   // roomHandler(socket);
   // console.log(socket.id, 'socket.id');
-  
-  chatHandler(socket, connectedClients);
+
+  chatHandler(socket);
 
   socket.on('disconnect', () => {
     console.log('disconnected');

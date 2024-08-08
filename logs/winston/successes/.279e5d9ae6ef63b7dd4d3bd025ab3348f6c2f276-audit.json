@@ -249,6 +249,16 @@
             "date": 1723104555920,
             "name": "/home/sarwar/WEB/JOB/Task/Studyin/study-live-server/logs/winston/successes/phu-2024-08-08-14-success.log",
             "hash": "69771f0e88fe55d2fb1965bf07c90bfcf5d1cbb865d04bef14f0332c4ee2f2b9"
+        },
+        {
+            "date": 1723109840267,
+            "name": "/home/sarwar/WEB/JOB/Task/Studyin/study-live-server/logs/winston/successes/phu-2024-08-08-15-success.log",
+            "hash": "6ddd2c43d2f0554434de774710cae97e473748f0cbd9c5647a23f2ffbcb73287"
+        },
+        {
+            "date": 1723123277980,
+            "name": "/home/sarwar/WEB/JOB/Task/Studyin/study-live-server/logs/winston/successes/phu-2024-08-08-19-success.log",
+            "hash": "0258f428bc8c340efcf1c7e76b6b73308d801a8388266b45b5ed2396d42be273"
         }
     ],
     "hashType": "sha256"

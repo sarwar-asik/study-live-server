@@ -7,22 +7,22 @@ type IMessage = {
   receiverId: string;
 };
 
-export const chatHandler = (socket: Socket, connectedClients: any) => {
+export const chatHandler = (socket: Socket) => {
   // console.log(socket?.id, 'socket?.id');
   socket.emit('get-users', { users: [] });
 
   // console.log(connectedClients, 'connectedClients');
   // const clientSocket = connectedClients[socket?.id]
-  function emitMessageToClients(clientIds: string[], message: IMessage) {
-    clientIds.forEach(clientId => {
-      const clientSocket = connectedClients[clientId];
-      if (clientSocket) {
-        clientSocket.emit('new-message', message);
-      } else {
-        console.log(`Client with ID ${clientId} is not Online.`);
-      }
-    });
-  }
+  // function emitMessageToClients(clientIds: string[], message: IMessage) {
+  //   clientIds.forEach(clientId => {
+  //     const clientSocket = connectedClients[clientId];
+  //     if (clientSocket) {
+  //       clientSocket.emit('new-message', message);
+  //     } else {
+  //       console.log(`Client with ID ${clientId} is not Online.`);
+  //     }
+  //   });
+  // }
 
   socket.on(
     'send-message',
