@@ -19,5 +19,13 @@ router.patch('/update', (0, auth_1.default)(user_1.ENUM_USER_ROLE.USER, user_1.E
 router.put('/:id', (0, auth_1.default)(user_1.ENUM_USER_ROLE.SUPER_ADMIN, user_1.ENUM_USER_ROLE.ADMIN), (0, validateRequest_1.default)(Users_validation_1.UsersValidation.updateProfile), Users_controller_1.UsersController.updateUser);
 router.post('/create-admin', (0, auth_1.default)(user_1.ENUM_USER_ROLE.SUPER_ADMIN, user_1.ENUM_USER_ROLE.ADMIN), (0, validateRequest_1.default)(Users_validation_1.UsersValidation.createAdmin), Users_controller_1.UsersController.createAdmin);
 router.delete('/:id', (0, auth_1.default)(user_1.ENUM_USER_ROLE.ADMIN, user_1.ENUM_USER_ROLE.SUPER_ADMIN), Users_controller_1.UsersController.deleteByIdFromDB);
-router.get('/:id', (0, auth_1.default)(user_1.ENUM_USER_ROLE.ADMIN, user_1.ENUM_USER_ROLE.SUPER_ADMIN), Users_controller_1.UsersController.getSingleDataById);
+router.get('/:id', 
+// auth(ENUM_USER_ROLE.ADMIN, ENUM_USER_ROLE.SUPER_ADMIN),
+Users_controller_1.UsersController.getSingleDataById);
+router.patch('/add-points/:id', 
+// auth(ENUM_USER_ROLE.USER, ENUM_USER_ROLE.SUPER_ADMIN, ENUM_USER_ROLE.ADMIN),
+(0, validateRequest_1.default)(Users_validation_1.UsersValidation.updatePoints), Users_controller_1.UsersController.addPoints);
+router.patch('/decrement-points/:id', 
+// auth(ENUM_USER_ROLE.USER, ENUM_USER_ROLE.SUPER_ADMIN, ENUM_USER_ROLE.ADMIN),
+(0, validateRequest_1.default)(Users_validation_1.UsersValidation.updatePoints), Users_controller_1.UsersController.decrementPoints);
 exports.userRoutes = router;

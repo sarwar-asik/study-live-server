@@ -28,10 +28,13 @@ const signUp = (userData) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield prisma_1.default.user.create({
         data: userData,
     });
+    // console.log("🚀 ~ file: Auth.service.ts:28 ~ result:", result)
     const newAccessToken = jwtHelpers_1.jwtHelpers.createToken({
-        email: userData.email,
-        id: userData.id,
-        role: userData.role,
+        email: result.email,
+        id: result.id,
+        role: result.role,
+        name: result.name,
+        points: result.points,
     }, config_1.default.jwt.secret, config_1.default.jwt.expires_in);
     return {
         accessToken: newAccessToken,
@@ -61,11 +64,15 @@ const authLogin = (payload) => __awaiter(void 0, void 0, void 0, function* () {
         email,
         role: isUserExist.role,
         id: isUserExist.id,
+        name: isUserExist.name,
+        points: isUserExist.points,
     }, config_1.default.jwt.secret, config_1.default.jwt.expires_in);
     const refreshToken = jwtHelpers_1.jwtHelpers.createToken({
         email,
         role: isUserExist.role,
         id: isUserExist.id,
+        name: isUserExist.name,
+        points: isUserExist.points,
     }, config_1.default.jwt.refresh_secret, config_1.default.jwt.refresh_expires_in);
     return {
         accessToken,
@@ -95,6 +102,9 @@ const refreshToken = (token) => __awaiter(void 0, void 0, void 0, function* () {
     const newAccessToken = jwtHelpers_1.jwtHelpers.createToken({
         id: isUserExist.id,
         role: isUserExist.role,
+        name: isUserExist.name,
+        email: isUserExist.email,
+        points: isUserExist.points,
     }, config_1.default.jwt.secret, config_1.default.jwt.expires_in);
     return {
         accessToken: newAccessToken,

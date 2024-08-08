@@ -24,8 +24,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UsersService = void 0;
-/* eslint-disable no-unused-vars */
-const client_1 = require("@prisma/client");
 const http_status_1 = __importDefault(require("http-status"));
 const ApiError_1 = __importDefault(require("../../../errors/ApiError"));
 const paginationHelper_1 = require("../../../helpers/paginationHelper");
@@ -128,15 +126,19 @@ const getSingleData = (id) => __awaiter(void 0, void 0, void 0, function* () {
         where: {
             id,
         },
+        include: {
+            receivedMessages: true,
+            // sentMessages: true,
+        },
     });
     return result;
 });
 const updateUser = (id, updateData) => __awaiter(void 0, void 0, void 0, function* () {
     // console.log(id,"and",updateData);
-    const isSuperAdmin = yield getSingleData(id);
+    const isSuperAdmin = (yield getSingleData(id));
     // console.log("🚀 ~ file: Users.service.ts:153 ~ isSuperAdmin:", isSuperAdmin)
-    if (isSuperAdmin && (isSuperAdmin === null || isSuperAdmin === void 0 ? void 0 : isSuperAdmin.role) === client_1.Role.super_admin) {
-        throw new ApiError_1.default(http_status_1.default.EXPECTATION_FAILED, "You can not update super admin");
+    if (isSuperAdmin && (isSuperAdmin === null || isSuperAdmin === void 0 ? void 0 : isSuperAdmin.role) === 'super_admin') {
+        throw new ApiError_1.default(http_status_1.default.EXPECTATION_FAILED, 'You can not update super admin');
     }
     const userResult = yield prisma_1.default.user.update({
         where: {
@@ -146,6 +148,47 @@ const updateUser = (id, updateData) => __awaiter(void 0, void 0, void 0, functio
     });
     return userResult;
 });
+const addPointsDB = (userId, points) => __awaiter(void 0, void 0, void 0, function* () {
+    const user = yield prisma_1.default.user.update({
+        where: {
+            id: userId,
+        },
+        data: {
+            points: {
+                increment: points,
+            },
+        },
+    });
+    return user;
+});
+const decrementPointsDB = (userId, points) => __awaiter(void 0, void 0, void 0, function* () {
+    const existingUser = yield prisma_1.default.user.findUnique({
+        where: {
+            id: userId,
+        },
+        select: {
+            points: true,
+        },
+    });
+    if (!existingUser) {
+        throw new ApiError_1.default(http_status_1.default.NOT_FOUND, 'User not found');
+    }
+    const newPoints = (existingUser === null || existingUser === void 0 ? void 0 : existingUser.points) - points;
+    if (newPoints < 0) {
+        throw new ApiError_1.default(http_status_1.default.BAD_REQUEST, 'Insufficient points');
+    }
+    const user = yield prisma_1.default.user.update({
+        where: {
+            id: userId,
+        },
+        data: {
+            points: {
+                decrement: points,
+            },
+        },
+    });
+    return user;
+});
 exports.UsersService = {
     createAdmin,
     getProfile,
@@ -154,4 +197,6 @@ exports.UsersService = {
     deleteByIdFromDB,
     getSingleData,
     updateUser,
+    addPointsDB,
+    decrementPointsDB,
 };

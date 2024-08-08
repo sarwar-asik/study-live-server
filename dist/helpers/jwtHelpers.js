@@ -8,6 +8,7 @@ const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const config_1 = __importDefault(require("../config"));
 const createToken = (payload, secret, expireTime) => {
     // console.log(expireTime, 'expireTime'); // Log the expireTime to verify
+    // console.log(payload,'payload');
     return jsonwebtoken_1.default.sign(payload, secret, {
         expiresIn: expireTime,
     });
