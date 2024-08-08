@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { Prisma, Role, User } from '@prisma/client';
+import { Prisma, User } from '@prisma/client';
 import httpStatus from 'http-status';
 import ApiError from '../../../errors/ApiError';
 import { paginationHelpers } from '../../../helpers/paginationHelper';
@@ -159,7 +159,7 @@ const updateUser = async (
 
   // console.log("🚀 ~ file: Users.service.ts:153 ~ isSuperAdmin:", isSuperAdmin)
 
-  if (isSuperAdmin && isSuperAdmin?.role === Role.super_admin) {
+  if (isSuperAdmin && isSuperAdmin?.role === 'super_admin') {
     throw new ApiError(
       httpStatus.EXPECTATION_FAILED,
       'You can not update super admin'
@@ -176,6 +176,34 @@ const updateUser = async (
   return userResult;
 };
 
+const addPointsDB = async (userId: string, points: number) => {
+  const user = await prisma.user.update({
+    where: {
+      id: userId,
+    },
+    data: {
+      points: {
+        increment: points,
+      },
+    },
+  });
+  return user;
+};
+
+const decrementPointsDB = async (userId: string, points: number) => {
+  const user = await prisma.user.update({
+    where: {
+      id: userId,
+    },
+    data: {
+      points: {
+        decrement: points,
+      },
+    },
+  });
+  return user;
+};
+
 export const UsersService = {
   createAdmin,
   getProfile,
@@ -184,4 +212,6 @@ export const UsersService = {
   deleteByIdFromDB,
   getSingleData,
   updateUser,
+  addPointsDB,
+  decrementPointsDB,
 };

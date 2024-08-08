@@ -234,6 +234,21 @@
             "date": 1722955037051,
             "name": "/home/sarwar/WEB/JOB/Task/Studyin/study-live-server/logs/winston/errors/phu-2024-06-08-20-error.log",
             "hash": "152134585bde53dda259eff8aba1e88b205ed2de84b7c42f229293ba248ea8c1"
+        },
+        {
+            "date": 1723049297762,
+            "name": "/home/sarwar/WEB/JOB/Task/Studyin/study-live-server/logs/winston/errors/phu-2024-07-08-22-error.log",
+            "hash": "7b3e5e23dab00d8e3a66085a0ce54ab19716679a62c711f0a18c28d31b7ac07e"
+        },
+        {
+            "date": 1723056108619,
+            "name": "/home/sarwar/WEB/JOB/Task/Studyin/study-live-server/logs/winston/errors/phu-2024-08-08-00-error.log",
+            "hash": "9389a0a7de62bc5e861d4d919097ad4328584d4c756805d37a37c516cec8e36c"
+        },
+        {
+            "date": 1723104555924,
+            "name": "/home/sarwar/WEB/JOB/Task/Studyin/study-live-server/logs/winston/errors/phu-2024-08-08-14-error.log",
+            "hash": "741ff25fbb85907c44ffae1b532a2a4d92d8d70d0ac3801358e8fc82f6306fb9"
         }
     ],
     "hashType": "sha256"

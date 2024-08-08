@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { createServer } from 'http';
 import { Server } from 'socket.io';
 import app from './app';
@@ -10,6 +11,7 @@ const httpServer = createServer(app);
 export const io = new Server(httpServer, {
   cors: {
     origin: '*',
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
   },
 });
 // const connectUsers =[]
@@ -18,50 +20,14 @@ const connectedClients: any = {};
 
 io.on('connection', socket => {
   console.log('user is connected', socket?.handshake?.query?.id);
-  socket?.id = socket?.handshake?.query?.id;
+  const userId = socket.handshake?.query?.id as string;
+  (socket as any).id = userId;
   connectedClients[socket?.id] = socket;
-
+  roomHandler(socket);
   // roomHandler(socket);
   // console.log(socket.id, 'socket.id');
-  socket.on('offer', offerData => {
-    console.log('>>offer', offerData);
-    if (connectedClients[offerData.targetId]) {
-      console.log('Sending incoming-call to:', offerData.targetId);
-      connectedClients[offerData.targetId].emit('incoming-call', {
-        offer: offerData.offer,
-        from: offerData.senderId,
-        senderName: offerData.senderName,
-        senderId: offerData.senderId,
-      });
-    }
-  });
-
-  socket.on('answer', answerData => {
-    console.log(answerData, 'answerData');
-    // const targetId = socket.handshake.query.targetId;
-    if (connectedClients[answerData.targetId]) {
-      connectedClients[answerData.targetId].emit('answer', answerData.answer);
-    }
-  });
-
-  socket.on('ice-candidate', candidate => {
-    socket.emit('ice-candidate', candidate);
-    console.log(candidate, '>> recive candidate');
-    // const targetId = socket.handshake.query.targetId as string;
-    // if (connectedClients[targetId]) {
-    //   connectedClients[targetId].emit('ice-candidate', candidate);
-    // }
-  });
-
-  socket.on('end-call', receiverId => {
-    // const targetId = socket.handshake.query.targetId;
-    if (connectedClients[receiverId]) {
-      connectedClients[receiverId].emit('end-call');
-    }
-  });
-
+  
   chatHandler(socket, connectedClients);
-  roomHandler(socket);
 
   socket.on('disconnect', () => {
     console.log('disconnected');
