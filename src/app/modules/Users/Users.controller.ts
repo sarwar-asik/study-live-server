@@ -1,13 +1,13 @@
-import { User, } from '@prisma/client';
+import { User } from '@prisma/client';
 import { Request, Response } from 'express';
 import httpStatus from 'http-status';
+import { ENUM_USER_ROLE } from '../../../enums/user';
 import ApiError from '../../../errors/ApiError';
 import catchAsync from '../../../shared/catchAsync';
 import pick from '../../../shared/pick';
 import sendResponse from '../../../shared/sendResponse';
 import { UserFilterableFields } from './UserConstant';
 import { UsersService } from './Users.service';
-import { ENUM_USER_ROLE } from '../../../enums/user';
 
 const createAdmin = catchAsync(async (req: Request, res: Response) => {
   const authUser = req.user as any;
@@ -121,6 +121,34 @@ const updateUser = catchAsync(async (req: Request, res: Response) => {
     });
   }
 });
+
+const addPoints = catchAsync(async (req: Request, res: Response) => {
+  const id = req.params.id;
+  const { points } = req.body;
+  const result = await UsersService.addPointsDB(id, points);
+  if (result) {
+    sendResponse<Partial<User>>(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: 'Successfully add Points ',
+      data: result,
+    });
+  }
+});
+
+const decrementPoints = catchAsync(async (req: Request, res: Response) => {
+  const id = req.params.id;
+  const { points } = req.body;
+  const result = await UsersService.decrementPointsDB(id, points);
+  if (result) {
+    sendResponse<Partial<User>>(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: 'Successfully decrement Points ',
+      data: result,
+    });
+  }
+});
 export const UsersController = {
   createAdmin,
   userProfile,
@@ -129,4 +157,6 @@ export const UsersController = {
   deleteByIdFromDB,
   getSingleDataById,
   updateUser,
+  addPoints,
+  decrementPoints,
 };

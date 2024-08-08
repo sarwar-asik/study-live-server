@@ -234,6 +234,56 @@
             "date": 1722955037047,
             "name": "/home/sarwar/WEB/JOB/Task/Studyin/study-live-server/logs/winston/successes/phu-2024-06-08-20-success.log",
             "hash": "b803d7ffabee2f0e356d4ceff3ce9714f663317238ac49442577cab727c65ff6"
+        },
+        {
+            "date": 1723049297745,
+            "name": "/home/sarwar/WEB/JOB/Task/Studyin/study-live-server/logs/winston/successes/phu-2024-07-08-22-success.log",
+            "hash": "41673f0a232117d713c3c234ae5f7cc5e27a92c0cd5d38001e4c901bcd8dad03"
+        },
+        {
+            "date": 1723056108613,
+            "name": "/home/sarwar/WEB/JOB/Task/Studyin/study-live-server/logs/winston/successes/phu-2024-08-08-00-success.log",
+            "hash": "bcfeeab676a523e1daa61a5a69aa83bfbfcee7ada7554af631b3f8900518a506"
+        },
+        {
+            "date": 1723104555920,
+            "name": "/home/sarwar/WEB/JOB/Task/Studyin/study-live-server/logs/winston/successes/phu-2024-08-08-14-success.log",
+            "hash": "69771f0e88fe55d2fb1965bf07c90bfcf5d1cbb865d04bef14f0332c4ee2f2b9"
+        },
+        {
+            "date": 1723109840267,
+            "name": "/home/sarwar/WEB/JOB/Task/Studyin/study-live-server/logs/winston/successes/phu-2024-08-08-15-success.log",
+            "hash": "6ddd2c43d2f0554434de774710cae97e473748f0cbd9c5647a23f2ffbcb73287"
+        },
+        {
+            "date": 1723123277980,
+            "name": "/home/sarwar/WEB/JOB/Task/Studyin/study-live-server/logs/winston/successes/phu-2024-08-08-19-success.log",
+            "hash": "0258f428bc8c340efcf1c7e76b6b73308d801a8388266b45b5ed2396d42be273"
+        },
+        {
+            "date": 1723126051506,
+            "name": "/home/sarwar/WEB/JOB/Task/Studyin/study-live-server/logs/winston/successes/phu-2024-08-08-20-success.log",
+            "hash": "afa27bf800ddf464eff1188e45ac34d3dfd304feaa7354cb2b2d41d232132e28"
+        },
+        {
+            "date": 1723129948099,
+            "name": "/home/sarwar/WEB/JOB/Task/Studyin/study-live-server/logs/winston/successes/phu-2024-08-08-21-success.log",
+            "hash": "e868354e9ebe1bc253ecfb24d4d1d4d87639cbd2411e15d53e79a6c34854feba"
+        },
+        {
+            "date": 1723136475590,
+            "name": "/home/sarwar/WEB/JOB/Task/Studyin/study-live-server/logs/winston/successes/phu-2024-08-08-23-success.log",
+            "hash": "aeb55f33ff0cc96e568fafc9b64e8dae865a3f4146485a511eb60901b386fd25"
+        },
+        {
+            "date": 1723143703564,
+            "name": "/home/sarwar/WEB/JOB/Task/Studyin/study-live-server/logs/winston/successes/phu-2024-09-08-01-success.log",
+            "hash": "f03d3ab7d9b9cfe460540768cd82390de05639f635701f41f73925a6233d9bd2"
+        },
+        {
+            "date": 1723147286264,
+            "name": "/home/sarwar/WEB/JOB/Task/Studyin/study-live-server/logs/winston/successes/phu-2024-09-08-02-success.log",
+            "hash": "ffdffbbc27c3a5bdaec9a86de2857fe5437ec4d86f6333b60b0783b96b845057"
         }
     ],
     "hashType": "sha256"

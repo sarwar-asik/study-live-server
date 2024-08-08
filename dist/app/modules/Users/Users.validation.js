@@ -4,9 +4,11 @@ exports.UsersValidation = void 0;
 const zod_1 = require("zod");
 const updateProfile = zod_1.z.object({
     body: zod_1.z.object({
-        name: zod_1.z.string({
+        name: zod_1.z
+            .string({
             required_error: 'name is Required.',
-        }).optional(),
+        })
+            .optional(),
         email: zod_1.z.string({ required_error: 'email is Required.' }).optional(),
         contact: zod_1.z.string({ required_error: 'contact is Required.' }).optional(),
         img: zod_1.z.string({ required_error: 'img is Required.' }).optional(),
@@ -24,4 +26,11 @@ const createAdmin = zod_1.z.object({
         role: zod_1.z.string({ required_error: 'role is Required.' }),
     }),
 });
-exports.UsersValidation = { updateProfile, createAdmin };
+const updatePoints = zod_1.z.object({
+    body: zod_1.z.object({
+        points: zod_1.z.number({
+            required_error: 'points is Required.',
+        }),
+    }),
+});
+exports.UsersValidation = { updateProfile, createAdmin, updatePoints };

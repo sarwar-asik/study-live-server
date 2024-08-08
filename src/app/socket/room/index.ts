@@ -12,18 +12,20 @@ export const roomHandler = (socket: Socket) => {
   const createRoom = ({
     peerId,
     receiverId,
+    senderName,
   }: {
     peerId: string;
     receiverId: string;
+    senderName: string;
   }) => {
     const roomId = uuidV4();
     rooms[roomId] = [];
     joinRoom({ roomId, peerId });
-    console.log('create-room', peerId, receiverId);
-    //   socket.emit("room-created", { roomId, receiverId, peerId });
-    socket.to(receiverId).emit('room-created', { roomId, receiverId, peerId });
+    socket.broadcast.emit('room-created-b', { roomId, receiverId, senderName });
+    socket.emit('room-created', { roomId, receiverId, senderName });
   };
   const joinRoom = ({ roomId, peerId }: IRoomParams) => {
+    console.log(peerId, ' joined room ', roomId);
     if (rooms[roomId]) {
       rooms[roomId].push(peerId);
       socket.join(roomId);
@@ -33,7 +35,8 @@ export const roomHandler = (socket: Socket) => {
         participants: rooms[roomId],
       });
     } else {
-      // createRoom({ peerId });
+      //   createRoom({ peerId });
+      console.log('room not found', roomId);
     }
 
     socket.on('disconnect', () => {

@@ -1,10 +1,11 @@
-
 import { z } from 'zod';
 const updateProfile = z.object({
   body: z.object({
-    name: z.string({
-      required_error: 'name is Required.',
-    }).optional(),
+    name: z
+      .string({
+        required_error: 'name is Required.',
+      })
+      .optional(),
     email: z.string({ required_error: 'email is Required.' }).optional(),
     contact: z.string({ required_error: 'contact is Required.' }).optional(),
     img: z.string({ required_error: 'img is Required.' }).optional(),
@@ -24,7 +25,12 @@ const createAdmin = z.object({
   }),
 });
 
+const updatePoints = z.object({
+  body: z.object({
+    points: z.number({
+      required_error: 'points is Required.',
+    }),
+  }),
+});
 
-export const UsersValidation = {  updateProfile,createAdmin };
-
-
+export const UsersValidation = { updateProfile, createAdmin, updatePoints };

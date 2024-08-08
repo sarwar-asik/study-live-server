@@ -24,8 +24,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UsersController = void 0;
-const client_1 = require("@prisma/client");
 const http_status_1 = __importDefault(require("http-status"));
+const user_1 = require("../../../enums/user");
 const ApiError_1 = __importDefault(require("../../../errors/ApiError"));
 const catchAsync_1 = __importDefault(require("../../../shared/catchAsync"));
 const pick_1 = __importDefault(require("../../../shared/pick"));
@@ -36,7 +36,7 @@ const createAdmin = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, vo
     const authUser = req.user;
     const data = req.body;
     console.log(authUser.role, 'and', data.role);
-    if (authUser.role !== client_1.Role.super_admin && data.role === 'admin') {
+    if (authUser.role !== user_1.ENUM_USER_ROLE.SUPER_ADMIN && data.role === 'admin') {
         // console.log('yesssssss');
         throw new ApiError_1.default(http_status_1.default.NOT_ACCEPTABLE, 'You can not create admin');
     }
@@ -124,6 +124,32 @@ const updateUser = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, voi
         });
     }
 }));
+const addPoints = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const id = req.params.id;
+    const { points } = req.body;
+    const result = yield Users_service_1.UsersService.addPointsDB(id, points);
+    if (result) {
+        (0, sendResponse_1.default)(res, {
+            statusCode: http_status_1.default.OK,
+            success: true,
+            message: 'Successfully add Points ',
+            data: result,
+        });
+    }
+}));
+const decrementPoints = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const id = req.params.id;
+    const { points } = req.body;
+    const result = yield Users_service_1.UsersService.decrementPointsDB(id, points);
+    if (result) {
+        (0, sendResponse_1.default)(res, {
+            statusCode: http_status_1.default.OK,
+            success: true,
+            message: 'Successfully decrement Points ',
+            data: result,
+        });
+    }
+}));
 exports.UsersController = {
     createAdmin,
     userProfile,
@@ -132,4 +158,6 @@ exports.UsersController = {
     deleteByIdFromDB,
     getSingleDataById,
     updateUser,
+    addPoints,
+    decrementPoints,
 };

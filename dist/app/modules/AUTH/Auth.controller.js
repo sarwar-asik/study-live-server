@@ -29,9 +29,24 @@ const config_1 = __importDefault(require("../../../config"));
 const jwt_token_1 = require("../../../constants/jwt.token");
 const catchAsync_1 = __importDefault(require("../../../shared/catchAsync"));
 const sendResponse_1 = __importDefault(require("../../../shared/sendResponse"));
+const cloudinary_1 = require("../../middlewares/cloudinary/cloudinary");
 const Auth_service_1 = require("./Auth.service");
 const SignUp = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a;
     const data = req.body;
+    console.log(data, 'signup data');
+    let profileImageUrl;
+    if (req.file) {
+        const uploadResult = yield (0, cloudinary_1.uploadOnCloudinary)(req.file.path);
+        // console.log("🚀  constcreate_animal= ~ uploadResult:", uploadResult)
+        if (uploadResult) {
+            profileImageUrl = (_a = uploadResult === null || uploadResult === void 0 ? void 0 : uploadResult.secure_url) !== null && _a !== void 0 ? _a : 'https://shorturl.at/pNO1x';
+        }
+    }
+    if (profileImageUrl) {
+        data.img = profileImageUrl;
+    }
+    console.log(data);
     const result = yield Auth_service_1.AuthService.signUp(data);
     const cookieOptions = {
         secure: config_1.default.env === 'production',
@@ -40,12 +55,12 @@ const SignUp = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0,
     if (result) {
         res.cookie(jwt_token_1.tokenName, result === null || result === void 0 ? void 0 : result.accessToken, cookieOptions);
         // eslint-disable-next-line no-unused-vars
-        const _a = result.data, { password } = _a, userData = __rest(_a, ["password"]);
+        const _b = result.data, { password } = _b, userData = __rest(_b, ["password"]);
         (0, sendResponse_1.default)(res, {
             statusCode: http_status_1.default.CREATED,
             success: true,
             message: 'Successfully SignUp',
-            data: userData,
+            data: { userData: userData, accessToken: result === null || result === void 0 ? void 0 : result.accessToken },
         });
     }
 }));

@@ -5,10 +5,24 @@ import config from '../../../config';
 import { tokenName } from '../../../constants/jwt.token';
 import catchAsync from '../../../shared/catchAsync';
 import sendResponse from '../../../shared/sendResponse';
+import { uploadOnCloudinary } from '../../middlewares/cloudinary/cloudinary';
 import { AuthService } from './Auth.service';
 
 const SignUp = catchAsync(async (req: Request, res: Response) => {
   const data = req.body;
+  console.log(data, 'signup data');
+  let profileImageUrl: string | undefined;
+  if (req.file) {
+    const uploadResult = await uploadOnCloudinary(req.file.path);
+    // console.log("🚀  constcreate_animal= ~ uploadResult:", uploadResult)
+    if (uploadResult) {
+      profileImageUrl = uploadResult?.secure_url ?? 'https://shorturl.at/pNO1x';
+    }
+  }
+  if (profileImageUrl) {
+    data.img = profileImageUrl;
+  }
+  console.log(data);
   const result = await AuthService.signUp(data);
 
   const cookieOptions = {

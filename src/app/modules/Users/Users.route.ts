@@ -49,4 +49,17 @@ router.get(
   UsersController.getSingleDataById
 );
 
+router.patch(
+  '/add-points/:id',
+  // auth(ENUM_USER_ROLE.USER, ENUM_USER_ROLE.SUPER_ADMIN, ENUM_USER_ROLE.ADMIN),
+  validateRequest(UsersValidation.updatePoints),
+  UsersController.addPoints
+);
+router.patch(
+  '/decrement-points/:id',
+  // auth(ENUM_USER_ROLE.USER, ENUM_USER_ROLE.SUPER_ADMIN, ENUM_USER_ROLE.ADMIN),
+  validateRequest(UsersValidation.updatePoints),
+  UsersController.decrementPoints
+);
+
 export const userRoutes = router;

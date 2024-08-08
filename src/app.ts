@@ -1,4 +1,5 @@
 import cookieParser from 'cookie-parser';
+import path from 'path';
 import cors from 'cors';
 import express, { Application, Request, Response } from 'express';
 import httpStatus from 'http-status';
@@ -17,6 +18,7 @@ app.use(
             'http://127.0.0.1:3000',
             'http://192.168.0.101:3000',
             'http://localhost:5173',
+            'http://localhost:5174',
           ]
         : [''],
     credentials: true,
@@ -28,6 +30,7 @@ app.use(cookieParser());
 // parser
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Root route
 app.get('/', (req: Request, res: Response) => {
