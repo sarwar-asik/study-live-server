@@ -143,7 +143,7 @@ const getSingleData = async (id: string): Promise<User | null> => {
     },
     include: {
       receivedMessages: true,
-      sentMessages: true,
+      // sentMessages: true,
     },
   });
 
@@ -191,16 +191,33 @@ const addPointsDB = async (userId: string, points: number) => {
 };
 
 const decrementPointsDB = async (userId: string, points: number) => {
-  const user = await prisma.user.update({
-    where: {
-      id: userId,
-    },
-    data: {
-      points: {
-        decrement: points,
+
+    const existingUser = await prisma.user.findUnique({
+      where: {
+        id: userId,
       },
-    },
-  });
+      select: {
+        points: true,
+      },
+    });
+    if(!existingUser){
+      throw new ApiError(httpStatus.NOT_FOUND, 'User not found');
+    }
+
+    const newPoints = existingUser?.points - points;
+    if(newPoints < 0){
+      throw new ApiError(httpStatus.BAD_REQUEST, 'Insufficient points');
+    }
+      const user = await prisma.user.update({
+        where: {
+          id: userId,
+        },
+        data: {
+          points: {
+            decrement: points,
+          },
+        },
+      });
   return user;
 };
 

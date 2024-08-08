@@ -57,7 +57,7 @@ router.patch(
 );
 router.patch(
   '/decrement-points/:id',
-  auth(ENUM_USER_ROLE.USER, ENUM_USER_ROLE.SUPER_ADMIN, ENUM_USER_ROLE.ADMIN),
+  // auth(ENUM_USER_ROLE.USER, ENUM_USER_ROLE.SUPER_ADMIN, ENUM_USER_ROLE.ADMIN),
   validateRequest(UsersValidation.updatePoints),
   UsersController.decrementPoints
 );
