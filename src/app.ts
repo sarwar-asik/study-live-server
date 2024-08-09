@@ -1,8 +1,8 @@
 import cookieParser from 'cookie-parser';
-import path from 'path';
 import cors from 'cors';
 import express, { Application, Request, Response } from 'express';
 import httpStatus from 'http-status';
+import path from 'path';
 import globalErrorHandler from './app/middlewares/globalErrorHandler';
 import router from './app/routes';
 import config from './config';
@@ -14,13 +14,14 @@ app.use(
     origin:
       config.env === 'development'
         ? [
-            'http://localhost:3000',
-            'http://127.0.0.1:3000',
-            'http://192.168.0.101:3000',
-            'http://localhost:5173',
-            'http://localhost:5174',
+            '*',
+            // 'http://localhost:3000',
+            // 'http://127.0.0.1:3000',
+            // 'http://192.168.0.101:3000',
+            // 'http://localhost:5173',
+            // 'http://localhost:5174',
           ]
-        : [''],
+        : ['*'],
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
   })
