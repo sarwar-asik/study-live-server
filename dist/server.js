@@ -15,7 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 require("colors");
 // import app from './app';
 const config_1 = __importDefault(require("./config"));
-const logger_1 = require("./shared/logger");
+// import { errorlogger } from './shared/logger';
 const socket_1 = __importDefault(require("./socket"));
 function main() {
     return __awaiter(this, void 0, void 0, function* () {
@@ -38,7 +38,8 @@ function main() {
         };
         const logError = (error) => {
             if (config_1.default.env === 'production') {
-                logger_1.errorlogger.error(error);
+                // errorlogger.error(error);
+                console.error('Error:', error);
             }
             else {
                 console.error('Error:', error);

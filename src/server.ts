@@ -2,7 +2,7 @@ import 'colors';
 import { Server } from 'http';
 // import app from './app';
 import config from './config';
-import { errorlogger } from './shared/logger';
+// import { errorlogger } from './shared/logger';
 import httpServer from './socket';
 
 async function main() {
@@ -27,7 +27,8 @@ async function main() {
 
   const logError = (error: unknown) => {
     if (config.env === 'production') {
-      errorlogger.error(error);
+      // errorlogger.error(error);
+        console.error('Error:', error);
     } else {
       console.error('Error:', error);
     }
