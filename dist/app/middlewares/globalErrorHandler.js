@@ -3,18 +3,19 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const zod_1 = require("zod");
 const config_1 = __importDefault(require("../../config"));
 const ApiError_1 = __importDefault(require("../../errors/ApiError"));
 const handleValidationError_1 = __importDefault(require("../../errors/handleValidationError"));
-const zod_1 = require("zod");
 const handleZodError_1 = __importDefault(require("../../errors/handleZodError"));
-const logger_1 = require("../../shared/logger");
+// import { errorlogger } from '../../shared/logger';
 const client_1 = require("@prisma/client");
 const handleClientError_1 = __importDefault(require("../../errors/handleClientError"));
 const globalErrorHandler = (error, req, res, next) => {
     config_1.default.env === 'development'
         ? console.log(`🐱‍🏍 globalErrorHandler ~~`, { error })
-        : logger_1.errorlogger.error(`🐱‍🏍 globalErrorHandler ~~`, error);
+        : // : errorlogger.error(`🐱‍🏍 globalErrorHandler ~~`, error);
+            console.log(`🐱‍🏍 globalErrorHandler ~~`, { error });
     let statusCode = 500;
     let message = 'Something went wrong !';
     let errorMessages = [];
