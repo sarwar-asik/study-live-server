@@ -11,7 +11,10 @@ const app: Application = express();
 
 app.use(
   cors({
-    origin: ['*'],
+    origin: [
+      'http://localhost:5173',
+      'https://study-live-frontend.onrender.com',
+    ],
     // config.env === 'development'
     //   ? [
     //       '*',
