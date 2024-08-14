@@ -4,6 +4,7 @@ import express, { Application, Request, Response } from 'express';
 import httpStatus from 'http-status';
 import path from 'path';
 import globalErrorHandler from './app/middlewares/globalErrorHandler';
+
 import router from './app/routes';
 import config from './config';
 
@@ -29,6 +30,8 @@ app.use(
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
   })
 );
+
+// parse cookies
 app.use(cookieParser());
 
 // parser
@@ -40,12 +43,20 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.get('/', (req: Request, res: Response) => {
   res.json({
     status: httpStatus.OK,
-    message: `sarwar-server is running on http://localhost:${config.port}`,
+    message: `study-in-server is running on http://localhost:${config.port}`,
   });
 });
 
 // API routes
 app.use('/api/v1', router);
+
+app.get('/getToken', async (req, res) => {
+  // const token = await LiveKitService.createToken();
+  // res.send(token);
+  res.send({
+    success: true,
+  });
+});
 
 // Global error handler
 app.use(globalErrorHandler);
