@@ -4,24 +4,30 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const cookie_parser_1 = __importDefault(require("cookie-parser"));
-const path_1 = __importDefault(require("path"));
 const cors_1 = __importDefault(require("cors"));
 const express_1 = __importDefault(require("express"));
 const http_status_1 = __importDefault(require("http-status"));
+const path_1 = __importDefault(require("path"));
 const globalErrorHandler_1 = __importDefault(require("./app/middlewares/globalErrorHandler"));
 const routes_1 = __importDefault(require("./app/routes"));
 const config_1 = __importDefault(require("./config"));
 const app = (0, express_1.default)();
 app.use((0, cors_1.default)({
-    origin: config_1.default.env === 'development'
-        ? [
-            'http://localhost:3000',
-            'http://127.0.0.1:3000',
-            'http://192.168.0.101:3000',
-            'http://localhost:5173',
-            'http://localhost:5174',
-        ]
-        : [''],
+    origin: true,
+    // [
+    //   'http://localhost:5173',
+    //   'https://study-live-frontend.onrender.com',
+    // ],
+    // config.env === 'development'
+    //   ? [
+    //       '*',
+    //       // 'http://localhost:3000',
+    //       // 'http://127.0.0.1:3000',
+    //       // 'http://192.168.0.101:3000',
+    //       // 'http://localhost:5173',
+    //       // 'http://localhost:5174',
+    //     ]
+    //   : ['*'],
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
 }));

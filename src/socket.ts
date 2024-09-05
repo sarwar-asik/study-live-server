@@ -21,8 +21,10 @@ const connectedClients: any = {};
 
 io.on('connection', socket => {
   console.log('user is connected', socket?.handshake?.query?.id);
+
   const userId = socket.handshake?.query?.id as string;
   (socket as any).id = userId;
+  
   connectedClients[socket?.id] = socket;
   roomHandler(socket);
   // roomHandler(socket);

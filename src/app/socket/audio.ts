@@ -3,6 +3,7 @@ import { Socket } from 'socket.io';
 export const AudioHandler = (socket: Socket, connectedClients: any) => {
   socket.on('offer', offerData => {
     console.log('>>offer', offerData);
+    console.log(connectedClients[offerData.targetId], 'connectedClients');
     if (connectedClients[offerData.targetId]) {
       console.log('Sending incoming-call to:', offerData.targetId);
       connectedClients[offerData.targetId].emit('incoming-call', {
