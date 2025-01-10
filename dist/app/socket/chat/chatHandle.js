@@ -12,36 +12,49 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.chatHandler = void 0;
 const message_service_1 = require("../../modules/message/message.service");
 const chatHandler = (socket) => {
-    // console.log(socket?.id, 'socket?.id');
+    // Initialize connected users
     socket.emit('get-users', { users: [] });
-    // console.log(connectedClients, 'connectedClients');
-    // const clientSocket = connectedClients[socket?.id]
-    // function emitMessageToClients(clientIds: string[], message: IMessage) {
-    //   clientIds.forEach(clientId => {
-    //     const clientSocket = connectedClients[clientId];
-    //     if (clientSocket) {
-    //       clientSocket.emit('new-message', message);
-    //     } else {
-    //       console.log(`Client with ID ${clientId} is not Online.`);
-    //     }
-    //   });
-    // }
     socket.on('send-message', ({ message, senderId, receiverId }) => __awaiter(void 0, void 0, void 0, function* () {
-        console.log(message, 'message');
-        console.log({
-            message,
-            senderId,
-            receiverId,
-        });
-        const createMessage = yield message_service_1.MessageServices.insertDB({
-            message,
-            senderId,
-            receiverId,
-        });
-        socket.broadcast.emit('new-message', { createMessage });
-        // if (createMessage) {
-        //   emitMessageToClients([senderId, receiverId], createMessage);
-        // }
+        try {
+            // Validate message data
+            if (!(message === null || message === void 0 ? void 0 : message.trim()) || !senderId || !receiverId) {
+                socket.emit('new-message', {
+                    success: false,
+                    error: 'Invalid message data',
+                });
+                return;
+            }
+            // Store message in database
+            const createMessage = yield message_service_1.MessageServices.insertDB({
+                message: message.trim(),
+                senderId,
+                receiverId,
+            });
+            if (!createMessage) {
+                throw new Error('Failed to save message');
+            }
+            // Broadcast message to specific room or recipient
+            socket.to(receiverId).emit('new-message', {
+                success: true,
+                data: createMessage,
+            });
+            // Confirm message sent to sender
+            socket.emit('new-message', {
+                success: true,
+                data: createMessage,
+            });
+        }
+        catch (error) {
+            console.error('Error in send-message handler:', error);
+            socket.emit('new-message', {
+                success: false,
+                error: 'Failed to process message',
+            });
+        }
     }));
+    // Clean up on disconnect
+    socket.on('disconnect', () => {
+        console.log(`Client disconnected: ${socket.id}`);
+    });
 };
 exports.chatHandler = chatHandler;

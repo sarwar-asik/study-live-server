@@ -7,10 +7,10 @@ exports.authRoutes = void 0;
 const express_1 = require("express");
 const user_1 = require("../../../enums/user");
 const auth_1 = __importDefault(require("../../middlewares/auth"));
+const multer_1 = __importDefault(require("../../middlewares/multer/multer"));
 const validateRequest_1 = __importDefault(require("../../middlewares/validateRequest"));
 const Auth_controller_1 = require("./Auth.controller");
 const Auth_validation_1 = require("./Auth.validation");
-const multer_1 = __importDefault(require("../../middlewares/multer/multer"));
 const router = (0, express_1.Router)();
 router.post('/sign-up', multer_1.default.single('image'), 
 // validateRequest(AuthValidation.signUp),

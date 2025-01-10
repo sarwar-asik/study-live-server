@@ -1,47 +1,72 @@
+/* eslint-disable @typescript-eslint/consistent-type-definitions */
 import { Socket } from 'socket.io';
 import { MessageServices } from '../../modules/message/message.service';
 
-type IMessage = {
+
+interface IMessage {
   message: string;
   senderId: string;
   receiverId: string;
-};
+}
 
-export const chatHandler = (socket: Socket) => {
-  // console.log(socket?.id, 'socket?.id');
+interface IMessageResponse {
+  success: boolean;
+  data?: any;
+  error?: string;
+}
+
+
+export const chatHandler = (socket: Socket): void => {
+  // Initialize connected users
   socket.emit('get-users', { users: [] });
-
-  // console.log(connectedClients, 'connectedClients');
-  // const clientSocket = connectedClients[socket?.id]
-  // function emitMessageToClients(clientIds: string[], message: IMessage) {
-  //   clientIds.forEach(clientId => {
-  //     const clientSocket = connectedClients[clientId];
-  //     if (clientSocket) {
-  //       clientSocket.emit('new-message', message);
-  //     } else {
-  //       console.log(`Client with ID ${clientId} is not Online.`);
-  //     }
-  //   });
-  // }
-
   socket.on(
     'send-message',
-    async ({ message, senderId, receiverId }: IMessage) => {
-      console.log(message, 'message');
-      console.log({
-        message,
-        senderId,
-        receiverId,
-      });
-      const createMessage = await MessageServices.insertDB({
-        message,
-        senderId,
-        receiverId,
-      });
-      socket.broadcast.emit('new-message', { createMessage });
-      // if (createMessage) {
-      //   emitMessageToClients([senderId, receiverId], createMessage);
-      // }
+    async ({ message, senderId, receiverId }: IMessage): Promise<void> => {
+      try {
+        // Validate message data
+        if (!message?.trim() || !senderId || !receiverId) {
+          socket.emit('new-message', {
+            success: false,
+            error: 'Invalid message data',
+          } as IMessageResponse);
+          return;
+        }
+
+        // Store message in database
+        const createMessage = await MessageServices.insertDB({
+          message: message.trim(),
+          senderId,
+          receiverId,
+        });
+
+        if (!createMessage) {
+          throw new Error('Failed to save message');
+        }
+
+        // Broadcast message to specific room or recipient
+        socket.to(receiverId).emit('new-message', {
+          success: true,
+          data: createMessage,
+        } as IMessageResponse);
+
+        // Confirm message sent to sender
+        socket.emit('new-message', {
+          success: true,
+          data: createMessage,
+        } as IMessageResponse);
+
+      } catch (error) {
+        console.error('Error in send-message handler:', error);
+        socket.emit('new-message', {
+          success: false,
+          error: 'Failed to process message',
+        } as IMessageResponse);
+      }
     }
   );
+
+  // Clean up on disconnect
+  socket.on('disconnect', () => {
+    console.log(`Client disconnected: ${socket.id}`);
+  });
 };
