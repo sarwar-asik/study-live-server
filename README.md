@@ -1,93 +1,199 @@
-# Study Live server
+# Study Live Server 
 
-# Real-Time Communication Server
+<div align="center">
 
-This server is designed for a real-time communication application that supports audio, video, and chat functionalities. It includes comprehensive authentication, messaging, and image upload features. The server uses a PostgreSQL database managed with Prisma ORM, and it integrates security measures such as JWT authentication, CORS policy, and data validation using Zod.
+[![Node.js](https://img.shields.io/badge/Node.js-v18.x-green.svg)](https://nodejs.org)
+[![TypeScript](https://img.shields.io/badge/TypeScript-v4.x-blue.svg)](https://www.typescriptlang.org)
+[![Socket.IO](https://img.shields.io/badge/Socket.IO-v4.x-black.svg)](https://socket.io)
+[![Kafka](https://img.shields.io/badge/Kafka-Latest-red.svg)](https://kafka.apache.org)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-v14.x-blue.svg)](https://www.postgresql.org)
+
+</div>
+
+## Overview
+
+A powerful real-time communication server supporting audio/video calls, chat, and file sharing. Built with modern technologies and best practices for scalability and performance.
 
 ## Features
 
-- **Real-Time Communication**: Supports audio, video, and chat features using Socket.IO.
-- **Authentication**: Secure user authentication with JWT tokens.
-- **Messaging**: Send and receive messages with optional image attachments handled by Multer.
-- **Global Error Handling**: Centralized error management for consistent error responses.
-- **Validation**: Zod is used for request data validation to ensure data integrity.
-- **Security**: CORS policy and JWT authentication provide a secure environment.
-- **PostgreSQL with Prisma ORM**: Efficient data management with type-safe database access.
-- **Git Hooks with Husky**: Enforces code quality with pre-commit and pre-push hooks.
-
-## Technology Stack
-
-- **Backend**: Node.js, Express.js
-- **WebSockets**: Socket.IO
-- **Database**: PostgreSQL
-- **ORM**: Prisma ORM
-- **Authentication**: JSON Web Tokens (JWT)
-- **File Uploads**: Multer
-- **Validation**: Zod
-- **Security**: CORS, JWT
-- **Git Hooks**: Husky
-
-## API Endpoints
-
-### Authentication
-
-- **POST /api/auth/sign-up**  
-  Register a new user.
-
-  - **Body**: `{ username, email, password ,image}`
-
-- **POST /api/auth/login**  
-  Authenticate a user and retrieve a JWT token.
-
-  - **Body**: `{ email, password }`
-
-- **GET /api/auth/profile**  
-  Retrieve the authenticated user's profile.
-
-  - **Headers**: `{ Authorization: Bearer <token> }`
-
-- **GET /api/user/:id**  
-    Retrieve the authenticated SIngle user's data.
-  - **Headers**: `{ Authorization: Bearer <token> }`
-
-### Messaging
-
-- **POST /api/messages**  
-  Send a new message.
-
-  - **Body**: `{ recipientId, content }`
-  - **Headers**: `{ Authorization: Bearer <token> }`
-
-- **POST /api/messages/image**  
-  Send a new message with an image attachment.
-
-  - **Form Data**: `{ recipientId, content, imageFile }`
-  - **Headers**: `{ Authorization: Bearer <token> }`
-
-- **GET /api/messages?senderId=1234&receiverId=1234123**  
-  Retrieve all messages in a conversation.
-  - **Headers**: `{ Authorization: Bearer <token> }`
+### Authentication & Security
+- JWT-based authentication
+- Role-based access control
+- Secure password hashing
+- CORS protection
 
 ### Real-Time Communication
+- Text chat with typing indicators
+- Audio/Video calls using WebRTC
+- File sharing & image uploads
+- Presence detection
 
-- **WebSocket Events**
-  - `connect`: Connect to the WebSocket server.
-  - `message`: Send and receive chat messages in real-time.
-  - `audio-call`: Initiate and manage audio calls.
-  - `video-call`: Initiate and manage video calls.
+### Scalability
+- Kafka integration for distributed events
+- Socket.IO for real-time communication
+- Horizontal scaling support
+- Redis for session management
 
-## Security
+### Developer Experience
+- TypeScript for type safety
+- Swagger API documentation
+- Prisma ORM for database operations
+- Husky for git hooks
 
-- **CORS Policy**: Configured to allow secure cross-origin requests.
-- **JWT Authentication**: Protects API routes, ensuring only authenticated users can access resources.
-- **Zod Validation**: Validates incoming request data to prevent malformed or malicious inputs.
-- **Husky Git Hooks**: Pre-commit and pre-push hooks enforce code quality and consistency.
+## Quick Start
 
-## Installation and Setup
+### Prerequisites
 
-1. **Clone the repository**:
+- Node.js (v18.x or later)
+- PostgreSQL (v14.x or later)
+- Kafka cluster
+- Redis (optional, for session storage)
+
+### Installation
+
+1. **Clone the repository**
    ```bash
    git clone https://github.com/sarwar-asik/study-live-server
-
    cd study-live-server
    ```
+
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Set up environment variables**
+   Create a `.env` file in the root directory (see Environment Variables section below)
+
+4. **Run database migrations**
+   ```bash
+   npx prisma migrate dev
+   ```
+
+5. **Start the server**
+   ```bash
+   # Development
+   npm run dev
+
+   # Production
+   npm run build
+   npm start
+   ```
+
+## Environment Variables
+
+Create a `.env` file in the root directory with the following variables:
+
+```env
+# Server Configuration
+PORT=5000
+NODE_ENV=development
+SERVER_NAME=study-live-server
+
+# Database
+DATABASE_URL="postgresql://user:password@localhost:5432/dbname"
+
+# Authentication
+JWT_SECRET=your-jwt-secret
+JWT_EXPIRES_IN=7d
+BCRYPT_SALT_ROUNDS=12
+
+# Admin Credentials
+SUPER_ADMIN_EMAIL=admin@example.com
+SUPER_ADMIN_PASSWORD=admin123
+DEFAULT_STUDENT_PASS=student123
+
+# Cloudinary Configuration
+CLOUDINARY_CLOUD_NAME=your-cloud-name
+CLOUDINARY_API_KEY=your-api-key
+CLOUDINARY_API_SECRET=your-api-secret
+
+# Kafka Configuration
+KAFKA_CLIENT_ID=study-live-server
+KAFKA_BROKERS=kafka://kafka-0.kafka.svc.cluster.local:9092,kafka-1.kafka.svc.cluster.local:9092
+
+# Frontend URL (CORS)
+FRONTEND_URL=http://localhost:3000
+```
+
+## API Documentation
+
+### REST Endpoints
+
+#### Authentication
+- `POST /api/auth/sign-up` - Register new user
+- `POST /api/auth/login` - User login
+- `GET /api/auth/profile` - Get user profile
+- `GET /api/user/:id` - Get user details
+
+#### Messaging
+- `POST /api/messages` - Send message
+- `POST /api/messages/image` - Send message with image
+- `GET /api/messages` - Get conversation history
+
+### Socket.IO Events
+
+#### Chat Events
+- `send-message` - Send chat message
+- `new-message` - Receive new message
+- `typing` - User typing indicator
+
+#### Video Chat Events
+- `join-room` - Join video chat room
+- `offer` - WebRTC offer
+- `answer` - WebRTC answer
+- `ice-candidate` - ICE candidate exchange
+
+### Kafka Topics
+- `room-join` - Room join events
+- `room-leave` - Room leave events
+- `webrtc-offer` - WebRTC offers
+- `webrtc-answer` - WebRTC answers
+- `ice-candidate` - ICE candidates
+
+## Security Features
+
+- JWT authentication
+- Request validation using Zod
+- CORS protection
+- Rate limiting
+- Secure password hashing
+- Input sanitization
+
+## Testing
+
+```bash
+# Run tests
+npm test
+
+# Run tests with coverage
+npm run test:coverage
+```
+
+## Production Deployment
+
+1. Build the application:
+   ```bash
+   npm run build
+   ```
+
+2. Start the production server:
+   ```bash
+   npm start
+   ```
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Contributing
+
+1. Fork the repository
+2. Create your feature branch
+3. Commit your changes
+4. Push to the branch
+5. Create a Pull Request
+
+## Support
+
+For support, email support@studylive.com or join our Slack channel.

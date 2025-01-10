@@ -1,14 +1,13 @@
 import path from 'path';
 import swaggerJsdoc from 'swagger-jsdoc';
 import config from '../config';
-import {  swaggerDefinition, swaggerTags } from './swagger.utils';
+import { swaggerDefinition, swaggerTags } from './swagger.utils';
 
 const options: swaggerJsdoc.Options = {
   definition: {
     openapi: '3.0.0',
     info: {
-      title: `${config.server_name} Backend`,
-      version: '1.0.0',
+      title: `${config.server_name} Backend`,      version: '1.0.0',
       description: `Api Design of ${config.server_name}`,
       contact: {
         name: 'Sarwar Hossain',
@@ -16,8 +15,8 @@ const options: swaggerJsdoc.Options = {
         url: 'https://www.linkedin.com/in/sarwar-asik/',
       },
       license: {
-        name: 'SparkTech',
-        url: 'https://sparktech.agency/',
+        name: 'Apache 2.0',
+        url: 'http://www.apache.org/licenses/LICENSE-2.0.html',
       },
     },
     servers: [
@@ -78,10 +77,11 @@ export const swaggerUiOptions = {
     }
   `,
   docExpansion: 'none',
-  defaultModelsExpandDepth: -1,
+  defaultModelsExpandDepth:2,
   swaggerOptions: {
     docExpansion: 'none', // Collapses the routes by default
     persistAuthorization: true,
+
   },
 };
 

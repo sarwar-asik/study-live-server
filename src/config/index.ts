@@ -11,6 +11,10 @@ export default {
     email:process.env.SUPER_ADMIN_EMAIL,
     password:process.env.SUPER_ADMIN_PASSWORD
   },
+  kafka: {
+    clientId: process.env.KAFKA_CLIENT_ID,
+    brokers: process.env.KAFKA_BROKERS?.split(',') || [],
+  },
   server_name: process.env.SERVER_NAME,
   database_url: process.env.DATABASE_URL,
   default_student_pass: process.env.DEFAULT_STUDENT_PASS,

@@ -2,6 +2,7 @@
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
+var _a;
 Object.defineProperty(exports, "__esModule", { value: true });
 /* eslint-disable no-undef */
 const dotenv_1 = __importDefault(require("dotenv"));
@@ -10,6 +11,15 @@ dotenv_1.default.config({ path: path_1.default.join(process.cwd(), '.env') });
 exports.default = {
     env: process.env.NODE_ENV,
     port: process.env.PORT,
+    superAdmin: {
+        email: process.env.SUPER_ADMIN_EMAIL,
+        password: process.env.SUPER_ADMIN_PASSWORD
+    },
+    kafka: {
+        clientId: process.env.KAFKA_CLIENT_ID,
+        brokers: ((_a = process.env.KAFKA_BROKERS) === null || _a === void 0 ? void 0 : _a.split(',')) || [],
+    },
+    server_name: process.env.SERVER_NAME,
     database_url: process.env.DATABASE_URL,
     default_student_pass: process.env.DEFAULT_STUDENT_PASS,
     default_faculty_pass: process.env.DEFAULT_FACULTY_PASS,

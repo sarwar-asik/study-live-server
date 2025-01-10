@@ -12,8 +12,8 @@ export const swaggerTags = [
         description: "🔑 Auth related API"
     },
     {
-        name: "Messaging",
-        description: "📧 Messaging related API"
+        name: "Messages",
+        description: "📧 Message related API"
     },
     
 ]
