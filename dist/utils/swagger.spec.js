@@ -49,7 +49,7 @@ const options = {
         ],
         tags: swagger_utils_1.swaggerTags,
     },
-    apis: [path_1.default.join(__dirname, '../app/modules/**/*.ts')],
+    apis: [path_1.default.join(__dirname, '../app/modules/**/*.js'),],
 };
 // ! swagger UI customization sections
 exports.swaggerUiOptions = {
