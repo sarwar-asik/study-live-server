@@ -44,7 +44,7 @@ const options: swaggerJsdoc.Options = {
     ],
     tags: swaggerTags,
   },
-  apis: [path.join(__dirname, '../app/modules/**/*.ts')],
+  apis: [path.join(__dirname, '../app/modules/**/*.ts'), path.join(__dirname, '../app/routes/*.js')],
 };
 
 
