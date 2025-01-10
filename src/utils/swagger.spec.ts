@@ -7,7 +7,8 @@ const options: swaggerJsdoc.Options = {
   definition: {
     openapi: '3.0.0',
     info: {
-      title: `${config.server_name} Backend`,      version: '1.0.0',
+      title: `${config.server_name} Backend`,      
+      version: '1.0.0',
       description: `Api Design of ${config.server_name}`,
       contact: {
         name: 'Sarwar Hossain',
@@ -26,6 +27,8 @@ const options: swaggerJsdoc.Options = {
       {
         url: "http://54.157.71.177:5003",
       },
+      {
+        url: "http://89.207.132.170:5003"}
     ],
     components: {
       securitySchemes: {
@@ -44,14 +47,17 @@ const options: swaggerJsdoc.Options = {
     ],
     tags: swaggerTags,
   },
-  apis: [path.join(__dirname, '../app/modules/**/*.ts'), path.join(__dirname, '../app/routes/*.js')],
+  apis: [path.join(__dirname, '../app/modules/**/*.js'),],
 };
 
 
 // ! swagger UI customization sections
 export const swaggerUiOptions = {
-  customSiteTitle: `${config.server_name} API Docs`,
-  // customfavIcon: '/uploadFile/images/default/fitness-fav.png',
+  explorer: true,
+    tagsSorter: 'alpha', // Sort tags alphabetically
+    operationsSorter: 'alpha',
+    customSiteTitle: `${config.server_name} API Docs`,
+  // customfavIcon: '/uploadFile/images/default/ready-fav.png',
   customCss: `
       .swagger-ui .topbar { 
           //  display: none !important;
@@ -76,12 +82,13 @@ export const swaggerUiOptions = {
       text-transform: uppercase;
     }
   `,
-  docExpansion: 'none',
-  defaultModelsExpandDepth:2,
+  docExpansion: 'list',
+  // docExpansion: 'none',
+  defaultModelsExpandDepth: 3,
   swaggerOptions: {
-    docExpansion: 'none', // Collapses the routes by default
+    docExpansion: 'list', // Collapses the routes by default
+    // docExpansion: 'none', // Collapses the routes by default
     persistAuthorization: true,
-
   },
 };
 
