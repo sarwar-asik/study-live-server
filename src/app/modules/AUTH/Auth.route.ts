@@ -1,10 +1,10 @@
 import { Router } from 'express';
 import { ENUM_USER_ROLE } from '../../../enums/user';
 import auth from '../../middlewares/auth';
+import upload from '../../middlewares/multer/multer';
 import validateRequest from '../../middlewares/validateRequest';
 import { AuthController } from './Auth.controller';
 import { AuthValidation } from './Auth.validation';
-import upload from '../../middlewares/multer/multer';
 const router = Router();
 
 router.post(
